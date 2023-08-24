@@ -1,0 +1,30 @@
+body {
+    background-color: #FFFEF8;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-onglets ul {
+    display: flex;
+    margin-top: 40px;
+}
+
+.container-onglets li {
+    font-size: 16px;
+    font-weight: 700;
+    padding: 6px 18px;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 0 10px;
+    color: #1D6154;
+}
+
+.container-onglets li:active {
+    background-color: #1D6154;
+    color: white;
+}
+
