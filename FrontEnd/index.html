@@ -7,6 +7,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
       rel="stylesheet"
     />
@@ -15,6 +22,15 @@
     <link rel="stylesheet" href="./assets/accueil.css" />
   </head>
   <body>
+    <!-- black Bar -->
+    <div class="black-Bar hidden admin-element">
+      <button class="btnblack-bar">
+        <i class="fa-regular fa-pen-to-square"></i>
+        Mode édition
+      </button>
+      <button class="second-btnblack-bar">Publier les changements</button>
+    </div>
+
     <header>
       <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
       <nav>
@@ -30,6 +46,9 @@
       <section id="introduction">
         <figure>
           <img src="./assets/images/sophie-bluel.png" alt="" />
+          <button class="modal-btn hidden admin-element">
+            <i class="fa-regular fa-pen-to-square"></i>modifier
+          </button>
         </figure>
         <article>
           <h2>Designer d'espace</h2>
@@ -53,9 +72,13 @@
 
       <section>
         <div class="container">
-          <h2>Mes Projets</h2>
-          <div class="container-onglets">
+          <div class="title-modal-button">
+            <h2>Mes Projets</h2>
+            <button class="modal-btn-title hidden admin-element">
+              <i class="fa-regular fa-pen-to-square"></i>modifier
+            </button>
           </div>
+          <div class="container-onglets"></div>
 
           <div class="gallery"></div>
         </div>
@@ -73,8 +96,66 @@
           <input type="submit" value="Envoyer" />
         </form>
       </section>
-    </main>
 
+      <div class="modal-container hidden modal-main">
+        <div class="modal-main__content">
+          <div class="modal">
+            <button class="close-modal modal-trigger2">X</button>
+            <h2>Galerie photo</h2>
+            <div class="modal-img-container"></div>
+            <div class="btn-modal">
+              <button class="add-picture modal-trigger">
+                Ajouter une photo
+              </button>
+              <button class="delete-picture">Supprimer la galerie</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="modal-container modal-add">
+        <div class="modal-add__content">
+          <div class="modal">
+            <button class="back-modal">
+              <i class="fa-solid fa-arrow-left fa-xl"></i></button>
+            <button class="close-modal modal-trigger2">X</button>
+            <h2>Ajout photo</h2>
+            <div class="modal-img-preview">
+              <img src="./assets/icons/placeholder.svg" alt="placeholder">
+              <button class="add-picture">+ Ajouter photo</button>
+              <p>jpg, png : 4mo max</p>
+              
+            </div> 
+            
+            
+            <div class="title-modal">
+              <label for="title">Titre</label>
+              <input type="text" name="title" id="title" />
+            </div>
+            <div class="categorie-modal">
+              <label for="categorie">Catégorie</label>
+              <select name="category" id="categorie">
+                <option value="none"></option>
+                <option value="1">Objets</option>
+                <option value="2">Appartements</option>
+                <option value="3">Hôtels & restaurants</option>
+              </select>
+              
+            </form>
+          </div>
+          <div class="btn-valide">
+            <button class="add-picture modal-trigger">
+              Valider
+            </button>
+
+          </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
     <footer>
       <nav>
         <ul>
@@ -83,5 +164,6 @@
       </nav>
     </footer>
     <script type="text/javascript" src="./assets/js/accueil.js"></script>
+    <script type="text/javascript" src="./assets/js/modal.js"></script>
   </body>
 </html>

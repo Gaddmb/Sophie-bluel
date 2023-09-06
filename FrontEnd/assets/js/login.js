@@ -1,9 +1,11 @@
+//** Partie Login  */
+
 const btnConnection = document.querySelector("#btn-connection");
 
 const login = async (data) => {
   const user = {
-    email: document.getElementById("email"),
-    password: document.getElementById("password"),
+    email: document.getElementById("email").value,
+    password: document.getElementById("password").value,
   };
 
   return await fetch("http://localhost:5678/api/users/login", {
@@ -13,18 +15,22 @@ const login = async (data) => {
     },
     body: JSON.stringify(user),
   });
+  
 };
 
-btnConnection.addEventListener("submit", async function (event) {
+btnConnection.addEventListener("click", async function (event) {
   event.preventDefault();
 
-  const response = await login(data);
+  const response = await login();
   const user = await response.json();
 
   if (response.status === 200) {
-    sessionStorage.setItem("token", user);
+    sessionStorage.setItem("token", user.token);
     return window.location.assign("./index.html");
   }
   if (response.status === 401 || response.status === 404) {
+    const messageError = document.querySelector(".error-msg")
+    messageError.textContent = "Username or password invalid"
+    
   }
 });

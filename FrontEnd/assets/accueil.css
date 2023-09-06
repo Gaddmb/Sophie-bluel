@@ -1,30 +1,253 @@
 body {
-    background-color: #FFFEF8;
+  background-color: #fffef8;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .container-onglets ul {
-    display: flex;
-    margin-top: 40px;
+  display: flex;
+  margin: 40px 0;
 }
 
 .container-onglets li {
-    font-size: 16px;
-    font-weight: 700;
-    padding: 6px 18px;
-    border: 1px solid black;
-    border-radius: 20px;
-    margin: 0 10px;
-    color: #1D6154;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 6px 18px;
+  border: 1px solid black;
+  border-radius: 20px;
+  margin: 0 10px;
+  color: #1d6154;
 }
 
 .container-onglets li:active {
-    background-color: #1D6154;
-    color: white;
+  background-color: #1d6154;
+  color: white;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/** Galerie Photo ***/
+.modal-container {
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-main__content,
+.modal-add__content {
+  width: 630px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.modal {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.modal h2 {
+  color: black;
+  font-family: "Courier New", Courier, monospace;
+  margin: 40px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-img-container figcaption,
+.modal-img-container figure .work-img {
+  width: 100%;
+}
+
+.modal-img-container figure {
+  position: relative;
+}
+
+.modal-img-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  width: 90%;
+  margin-bottom: 40px;
+  margin: 0 auto;
+}
+
+.modal-img-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 80%;
+  margin: 0 auto;
+  background-color: aliceblue;
+  padding: 20px 0;
+}
+
+.modal-img-preview img {
+  width: 76px;
+}
+
+.modal-img-preview button {
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+.trash-icon {
+  position: absolute;
+  background-color: black;
+  width: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 11px;
+  padding: 2px;
+  top: 10px;
+  right: 5px;
+  cursor: pointer;
+}
+
+/*** Second modal ***/
+
+.title-modal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 10px 0px;
+}
+.title-modal input {
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  height: 50px;
+  margin: 10px 0px;
+}
+.categorie-modal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.categorie-modal select {
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  height: 50px;
+}
+
+/** btn **/
+.delete-picture {
+  background: #fff;
+  border: none;
+  color: red;
+  margin: 5px;
+  padding: 0px;
+  cursor: pointer;
+}
+
+.add-picture {
+  width: 220px;
+  height: 40px;
+  margin: 20px 0px;
+  cursor: pointer;
+  border-radius: 60px;
+  background-color: #1d6154;
+  color: white;
+}
+
+.btn-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.close-modal {
+  padding: 8px 10px;
+  border: none;
+  font-size: 24px;
+  position: absolute;
+  cursor: pointer;
+  top: 10px;
+  background-color: transparent;
+  right: 10px;
+}
+
+.back-modal {
+  background-color: white;
+  border: none;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+}
+
+.btn-valide {
+  display: flex;
+  justify-content: center;
+}
+
+/*** Black Bar ***/
+
+.btnblack-bar {
+  color: white;
+  background: black;
+  font-size: larger;
+  border: none;
+  cursor: pointer;
+}
+.second-btnblack-bar {
+  background: white;
+  font-size: small;
+  font-weight: 700;
+  border: none;
+  border-radius: 20px;
+  height: 40px;
+  padding: 0px 10px;
+  cursor: pointer;
+}
+.black-Bar {
+  background-color: black;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/** Bouton edit**/
+
+.modal-btn {
+  background-color: #fffef8;
+  border: none;
+  font-size: large;
+  cursor: pointer;
+  margin-left: 50px;
+}
+
+.modal-btn-title {
+  background-color: #fffef8;
+  border: none;
+  font-size: large;
+  cursor: pointer;
+}
+
+.title-modal-button {
+  display: flex;
 }
 
