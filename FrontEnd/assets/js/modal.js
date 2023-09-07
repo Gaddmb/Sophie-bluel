@@ -47,17 +47,16 @@ function handleModal() {
 
   // je boucle sur mon tableau
   galleryWorks.forEach((galleryWorks) => {});
+
   deletePicture.addEventListener("click", async () => {
-    fetch(`http://localhost:5678/api/works/`, {
+    const response = await fetch(`http://localhost:5678/api/works/`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
       },
-      body: JSON.stringify(),
-    }).then((response) => response.json());
-    if (reponse === 200) {
-      document.querySelectorAll(".").classList.remove("");
-    }
+    });
+
+    if (response === 200);
   });
 
   closeModalElements.forEach((element) => {
