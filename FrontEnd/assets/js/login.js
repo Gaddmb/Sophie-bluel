@@ -20,6 +20,7 @@ const login = async (data) => {
 };
 
 btnConnection.addEventListener("click", async function (event) {
+  // bloque le comportement par defaut du navigateur 
   event.preventDefault();
 
   const response = await login();

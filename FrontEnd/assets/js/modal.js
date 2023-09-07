@@ -40,20 +40,25 @@ function handleModal() {
     document.querySelector(".modal-main").classList.remove("hidden");
   });
 
-  const deletePicture = document.querySelectorAll(
-    ".fa-regular fa-pen-to-square"
-  );
+
+  // localeStorage et un espace de stockage present au seins meme du navigateur 
+  // il permet de stocket de l'information qui sera accessible dans le temps 
+  const deletePicture = document.querySelectorAll(".fa-regular fa-pen-to-square");
   const galleryWorks = document.querySelectorAll(".modal-img-container");
 
   // je boucle sur mon tableau
-  galleryWorks.forEach((galleryWorks) => {});
+  galleryWorks.forEach((galleryWorks) => {
+
+  });
 
   deletePicture.addEventListener("click", async () => {
     const response = await fetch(`http://localhost:5678/api/works/`, {
       method: "DELETE",
       headers: {
-        Accept: "application/json",
+        'Accept': 'application/json',
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify(),
     });
 
     if (response === 200);
