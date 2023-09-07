@@ -40,22 +40,23 @@ function handleModal() {
     document.querySelector(".modal-main").classList.remove("hidden");
   });
 
-
-  const deletePicture = document.querySelectorAll(".fa-regular fa-pen-to-square");
+  const deletePicture = document.querySelectorAll(
+    ".fa-regular fa-pen-to-square"
+  );
   const galleryWorks = document.querySelectorAll(".modal-img-container");
-  galleryWorks.forEach((galleryWorks) => { 
 
-  });
+  // je boucle sur mon tableau
+  galleryWorks.forEach((galleryWorks) => {});
   deletePicture.addEventListener("click", async () => {
     fetch(`http://localhost:5678/api/works/`, {
       method: "DELETE",
       headers: {
-        "Accept" : 'application/json'
-      }
-
-    });
-    if ( reponse === 200 ) {
-       
+        Accept: "application/json",
+      },
+      body: JSON.stringify(),
+    }).then((response) => response.json());
+    if (reponse === 200) {
+      document.querySelectorAll(".").classList.remove("");
     }
   });
 

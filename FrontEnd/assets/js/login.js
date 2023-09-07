@@ -11,6 +11,7 @@ const login = async (data) => {
   return await fetch("http://localhost:5678/api/users/login", {
     method: "post",
     headers: {
+      'Accept': 'application/json',
       "Content-Type": "application/json",
     },
     body: JSON.stringify(user),
