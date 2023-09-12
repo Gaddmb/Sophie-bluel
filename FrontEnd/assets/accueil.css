@@ -171,6 +171,10 @@ body {
   color: white;
 }
 
+.img-selected {
+  display: none;
+}
+
 .btn-modal {
   display: flex;
   flex-direction: column;
@@ -251,3 +255,7 @@ body {
   display: flex;
 }
 
+
+#add-project-form {
+  margin: 0px 60px;
+}

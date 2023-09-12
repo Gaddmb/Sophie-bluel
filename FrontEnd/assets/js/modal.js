@@ -3,8 +3,10 @@ function displayModalWorks() {
     /* methode querySelector me permet le renvoie d'un element qui correspond a un selecteur CSS  */
     const galleryModal = document.querySelector(".modal-img-container");
 
+    galleryModal.innerHTML = "";
     for (let work of works) {
       const figureElement = createWorkModalElement(work);
+
       /* methode appendChild ajout un noeud a la fin de la liste des enfants d'un noeuf parent spécifié */
       galleryModal.appendChild(figureElement);
     }
@@ -23,12 +25,12 @@ function createWorkModalElement(work) {
   imgElement.classList.add("work-img"); //__ on ajoute une classe css "work-img"
   iconeElement.setAttribute("src", "assets/icons/trash.png");
   iconeElement.classList.add("trash-icon");
+  iconeElement.setAttribute("data-id", work.id);
   figCaptionElement.textContent = "éditer";
-
   figureElement.appendChild(imgElement); //__ on ajout nos balise dans la balise parente
   figureElement.appendChild(figCaptionElement); //__ pareil
   figureElement.appendChild(iconeElement); //__ pareil
-
+  iconeElement.addEventListener("click", removeProject);
   return figureElement;
 }
 
@@ -36,40 +38,98 @@ function createWorkModalElement(work) {
 function handleModal() {
   const closeModalElements = document.querySelectorAll(".close-modal");
   const openMainModal = document.querySelector(".modal-btn-title");
+  const addImg = document.querySelector(".modal-add .add-picture");
+  const inputFile = document.querySelector(".img-selected");
+  const addPictureButton = document.querySelector(".add-picture.modal-trigger");
+  const modalAdd = document.querySelector(".modal-container.modal-add");
+  const backModalButton = document.querySelector(".back-modal");
+  const galleryModal = document.querySelector(".modal-main");
+
+  // even me renvoie a l'autre modal 
+  addPictureButton.addEventListener("click", () => {
+    modalAdd.classList.remove("hidden");
+  });
+  backModalButton.addEventListener("click", () => {
+    modalAdd.classList.add("hidden");
+    galleryModal.classList.remove("hidden");
+  });
+
+
+  // Event pour supprimer les images
+  addImg.addEventListener("click", () => {
+    const inputFile = document.querySelector(".img-selected");
+    inputFile.click();
+  });
+  inputFile.addEventListener("change", function (event) {
+    const files = event.target.files;
+    if (files.length > 0) {
+      const file = files[0];
+      const placeholder = document.querySelector(".placeholder");
+      const url = URL.createObjectURL(file);
+      placeholder.setAttribute("src", url);
+    }
+  });
+
+  // Even pour Ouvrir le modal 
   openMainModal.addEventListener("click", () => {
     document.querySelector(".modal-main").classList.remove("hidden");
   });
 
-
-  // localeStorage et un espace de stockage present au seins meme du navigateur 
-  // il permet de stocket de l'information qui sera accessible dans le temps 
-  const deletePicture = document.querySelectorAll(".fa-regular fa-pen-to-square");
-  const galleryWorks = document.querySelectorAll(".modal-img-container");
-
-  // je boucle sur mon tableau
-  galleryWorks.forEach((galleryWorks) => {
-
-  });
-
-  deletePicture.addEventListener("click", async () => {
-    const response = await fetch(`http://localhost:5678/api/works/`, {
-      method: "DELETE",
-      headers: {
-        'Accept': 'application/json',
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(),
-    });
-
-    if (response === 200);
-  });
-
+  // Even pour fermer les modal
   closeModalElements.forEach((element) => {
     element.addEventListener("click", (event) => {
       // correspond a mon bouton close modal
       event.target.closest(".modal-container").classList.add("hidden");
     });
   });
+}
+
+// Event pour ajouter des images
+const addProjectForm = document.getElementById("add-project-form");
+addProjectForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const title = document.getElementById("title").value;
+  const categorie = document.getElementById("categorie").value;
+  const imageFile = document.querySelector(".img-selected").files[0];
+  const formData = new FormData();
+  formData.append("title", title);
+  formData.append("category", categorie);
+  formData.append("image", imageFile);
+  try {
+    const response = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
+      },
+      body: formData,
+    });
+
+    if (response.status === 201) {
+      displayModalWorks();
+    } else {
+      // Gérez les erreurs
+      console.error("Erreur lors de l'ajout du projet");
+    }
+  } catch (error) {
+    console.error("Erreur lors de la requête : ", error);
+  }
+});
+
+// supprimer les images
+async function removeProject(event) {
+  const id = event.target.dataset.id;
+  const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
+    },
+  });
+  if (response.status == 204) {
+    displayModalWorks();
+  }
+
 }
 
 function main() {

@@ -113,48 +113,46 @@
         </div>
       </div>
 
-
       <div class="modal-container modal-add">
         <div class="modal-add__content">
           <div class="modal">
             <button class="back-modal">
-              <i class="fa-solid fa-arrow-left fa-xl"></i></button>
+              <i class="back fa-solid fa-arrow-left fa-xl"></i>
+            </button>
             <button class="close-modal modal-trigger2">X</button>
             <h2>Ajout photo</h2>
             <div class="modal-img-preview">
-              <img src="./assets/icons/placeholder.svg" alt="placeholder">
+              <img
+                src="./assets/icons/placeholder.svg"
+                alt="placeholder"
+                class="placeholder"
+              />
               <button class="add-picture">+ Ajouter photo</button>
+              <input type="file" class="img-selected" />
               <p>jpg, png : 4mo max</p>
-              
-            </div> 
-            
-            
-            <div class="title-modal">
-              <label for="title">Titre</label>
-              <input type="text" name="title" id="title" />
             </div>
-            <div class="categorie-modal">
-              <label for="categorie">Catégorie</label>
-              <select name="category" id="categorie">
-                <option value="none"></option>
-                <option value="1">Objets</option>
-                <option value="2">Appartements</option>
-                <option value="3">Hôtels & restaurants</option>
-              </select>
-              
-            </form>
-          </div>
-          <div class="btn-valide">
-            <button class="add-picture modal-trigger">
-              Valider
-            </button>
 
-          </div>
-            </div>
+            <form id="add-project-form">
+              <div class="title-modal">
+                <label for="title">Titre</label>
+                <input type="text" name="title" id="title" />
+              </div>
+              <div class="categorie-modal">
+                <label for="categorie">Catégorie</label>
+                <select name="category" id="categorie">
+                  <option value="none"></option>
+                  <option value="1">Objets</option>
+                  <option value="2">Appartements</option>
+                  <option value="3">Hôtels & restaurants</option>
+                </select>
+              </div>
+              <div class="btn-valide">
+                <input type="submit" value="Valider" id="modal-valider">
+              </div>
+            </form>
           </div>
         </div>
       </div>
-
     </main>
     <footer>
       <nav>
@@ -164,6 +162,11 @@
       </nav>
     </footer>
     <script type="text/javascript" src="./assets/js/accueil.js"></script>
-    <script type="text/javascript" src="./assets/js/modal.js"></script>
+    <script
+      await
+      defer
+      type="text/javascript"
+      src="./assets/js/modal.js"
+    ></script>
   </body>
 </html>
