@@ -13,7 +13,6 @@ async function getCategories() {
 }
 
 //** Partie affichage image
-
 function createWorkElement(work) {
   // je crée dans mon DOM l'element figure grace a la methode createElement que je mets dans ma variable
   const figureElement = document.createElement("figure");
@@ -51,13 +50,10 @@ function displayWorks() {
 function displayOnglets() {
   getCategories().then((categories) => {
     const container = document.querySelector(".container-onglets");
-
     /* la methode createElement va me permrettre de créer un element */
     const ulElement = document.createElement("ul");
-
     /* la methode unshift ajoute un ou plusieurs éléments au début d'un tableau et renvoie la nouvelle longueur du tableau */
     categories.unshift({ id: -1, name: "Tous" });
-
     for (let categorie of categories) {
       const liElement = document.createElement("li");
       // la propriété textContent définit ou renvoie le contenu textuel du noeud spécifié et de tous ses descendants
@@ -67,25 +63,18 @@ function displayOnglets() {
       /* la methode addEventListener attache une fonction à appeler à chaque fois que l'évènement spécifié est envoyé à la cible */
       liElement.addEventListener("click", function (event) {
         filtersWorks(event.target.id);
-        
       });
       ulElement.appendChild(liElement);
-      
     }
     container.appendChild(ulElement);
-    
-  
   });
-  
 }
-
-
-
 async function filtersWorks(id) {
   const works = await getWorks();
-  const worksFiltered =
-    id == -1 ? works : works.filter((work) => work.categoryId == id);
+// filtre les objet en fonction de l'id si l'id = -1 tous les  projet sont conservés 
+  const worksFiltered = id == -1 ? works : works.filter((work) => work.categoryId == id);
   const gallery = document.querySelector(".gallery");
+// j'oublie souvent mais la propriete innerhtml réinitialise ou suppirme 
   gallery.innerHTML = "";
   for (let work of worksFiltered) {
     const figureElement = createWorkElement(work);
@@ -94,7 +83,6 @@ async function filtersWorks(id) {
 }
 
 //** Partie Login  ***/
-
 // localeStorage et un espace de stockage present au seins meme du navigateur
 // il permet de stocket de l'information qui sera accessible dans le temps
 function isConnected() {
@@ -102,7 +90,6 @@ function isConnected() {
   /**  le !! transforme en vrai ou faux */
   return !!token;
 }
-
 function handleAdmin() {
   if (isConnected()) {
     const adminElements = document.querySelectorAll(".admin-element");

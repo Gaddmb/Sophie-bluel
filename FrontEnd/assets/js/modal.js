@@ -46,18 +46,19 @@ function handleModal() {
   const galleryModal = document.querySelector(".modal-main");
   const addProjectForm = document.getElementById("add-project-form");
 
-  // even me renvoie a l'autre modal
+  // Event pour ajouter des images à la modal
   addPictureButton.addEventListener("click", () => {
     modalAdd.classList.remove("hidden");
     galleryModal.classList.add("hidden");
   });
 
+  // event pour revenir en arrière dans la modal
   backModalButton.addEventListener("click", () => {
     modalAdd.classList.add("hidden");
     galleryModal.classList.remove("hidden");
   });
 
-  // Event pour supprimer les images
+  // Event pour Ajouter des images qui va déclanché le champ input 
   addImg.addEventListener("click", () => {
     const inputFile = document.querySelector(".img-selected");
     inputFile.click();
@@ -75,7 +76,7 @@ function handleModal() {
     }
   });
 
-  // Even pour Ouvrir le modal
+  // Even pour Ouvrir le modal principal 
   openMainModal.addEventListener("click", () => {
     document.querySelector(".modal-main").classList.remove("hidden");
   });
@@ -88,8 +89,12 @@ function handleModal() {
     });
   });
 
+
+  // cette parti du code gere l'ajout de nouveau projet 
   addProjectForm.addEventListener("submit", async (e) => {
+  // empeche le comportement par defaut 
     e.preventDefault();
+  // recuepere les donnes du formulaire 
     const title = document.getElementById("title").value;
     const categorie = document.getElementById("categorie").value;
     const imageFile = document.querySelector(".img-selected").files[0];
@@ -97,7 +102,7 @@ function handleModal() {
     formData.append("title", title);
     formData.append("category", categorie);
     formData.append("image", imageFile);
-
+// envoie ces donnés au serveur en faisaint une requete 
     try {
       const response = await fetch("http://localhost:5678/api/works", {
         method: "POST",
@@ -133,6 +138,7 @@ function handleModal() {
 
 // supprimer les images
 async function removeProject(event) {
+// recuepre l'id de l'element puis renvoie une requete pour suppprimer l'image 
   const id = event.target.dataset.id;
   const response = await fetch(`http://localhost:5678/api/works/${id}`, {
     method: "DELETE",
@@ -142,6 +148,7 @@ async function removeProject(event) {
       Authorization: "Bearer " + sessionStorage.getItem("token"),
     },
   });
+//  mettre a jour l'affichage
   if (response.status == 204) {
     displayModalWorks();
   }
