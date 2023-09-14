@@ -1,3 +1,6 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap');
+
 body {
   background-color: #fffef8;
 }
@@ -11,6 +14,11 @@ body {
 .container-onglets ul {
   display: flex;
   margin: 40px 0;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 
 .container-onglets li {
@@ -55,6 +63,14 @@ body {
   flex-direction: column;
 }
 
+.container-onglets {
+  cursor: pointer;
+}
+
+header ul li {
+  cursor: pointer;
+}
+
 .modal {
   background-color: white;
   width: 100%;
@@ -66,10 +82,11 @@ body {
 
 .modal h2 {
   color: black;
-  font-family: "Courier New", Courier, monospace;
-  margin: 40px 0px;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	margin: 40px 0px;
   display: flex;
   justify-content: center;
+  font-weight: 400;
 }
 
 .modal-img-container figcaption,
@@ -164,11 +181,15 @@ body {
 .add-picture {
   width: 220px;
   height: 40px;
-  margin: 20px 0px;
+  margin: 20px 0px 0px 0px;
   cursor: pointer;
   border-radius: 60px;
   background-color: #1d6154;
   color: white;
+}
+
+.delete-picture {
+  margin: 20px 0px;
 }
 
 .img-selected {
@@ -258,4 +279,18 @@ body {
 
 #add-project-form {
   margin: 0px 60px;
+}
+
+.line {
+  width: 100%;
+  height: 1px; 
+  background-color: #B3B3B3; 
+  margin-top: 50px;
+}
+
+.line-main {
+  width: 80%;
+  height: 1px; 
+  background-color: #B3B3B3; 
+  margin-top: 50px;
 }

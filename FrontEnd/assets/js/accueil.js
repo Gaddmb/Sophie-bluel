@@ -1,6 +1,6 @@
 /* async signifie que la function envoyé et une promesse ce qui veut dire qu'elle va transfomer notre renvoie en promesse*/
 async function getWorks() {
-// je recupere les données pour les importer dans mon code
+  // je recupere les données pour les importer dans mon code
   const res = await fetch("http://localhost:5678/api/works");
   const data = await res.json();
   return data;
@@ -12,7 +12,7 @@ async function getCategories() {
   return data;
 }
 
-//** Partie Ajout photo 
+//** Partie affichage image
 
 function createWorkElement(work) {
   // je crée dans mon DOM l'element figure grace a la methode createElement que je mets dans ma variable
@@ -37,16 +37,17 @@ function displayWorks() {
   getWorks().then((works) => {
     // methode querySelector me permet le renvoie d'un element qui correspond a un selecteur CSS
     const gallery = document.querySelector(".gallery");
+    gallery.innerHTML = "";
     // j'utilise la methode
     for (let work of works) {
       const figureElement = createWorkElement(work);
-      // methode appendChild ajout un noeud a la fin de la liste des enfants d'un noeuf parent spécifié 
+      // methode appendChild ajout un noeud a la fin de la liste des enfants d'un noeuf parent spécifié
       gallery.appendChild(figureElement);
     }
   });
 }
 
-//** Part tab 
+//** Partie Onglet
 function displayOnglets() {
   getCategories().then((categories) => {
     const container = document.querySelector(".container-onglets");
@@ -66,27 +67,36 @@ function displayOnglets() {
       /* la methode addEventListener attache une fonction à appeler à chaque fois que l'évènement spécifié est envoyé à la cible */
       liElement.addEventListener("click", function (event) {
         filtersWorks(event.target.id);
+        
       });
       ulElement.appendChild(liElement);
+      
     }
     container.appendChild(ulElement);
+    
+  
   });
+  
 }
+
+
 
 async function filtersWorks(id) {
   const works = await getWorks();
-  const worksFiltered = id == -1 ? works : works.filter((work) => work.categoryId == id);
-  const gallery = document.querySelector(".gallery"); gallery.innerHTML = "";
+  const worksFiltered =
+    id == -1 ? works : works.filter((work) => work.categoryId == id);
+  const gallery = document.querySelector(".gallery");
+  gallery.innerHTML = "";
   for (let work of worksFiltered) {
     const figureElement = createWorkElement(work);
     gallery.appendChild(figureElement);
   }
 }
 
-//** Part Login  ***/
+//** Partie Login  ***/
 
-// localeStorage et un espace de stockage present au seins meme du navigateur 
-// il permet de stocket de l'information qui sera accessible dans le temps 
+// localeStorage et un espace de stockage present au seins meme du navigateur
+// il permet de stocket de l'information qui sera accessible dans le temps
 function isConnected() {
   const token = sessionStorage.getItem("token");
   /**  le !! transforme en vrai ou faux */
@@ -102,7 +112,7 @@ function handleAdmin() {
   }
 }
 
-//** call other function en 1  */
+//** Appel de tout les Function  */
 function main() {
   displayOnglets();
   displayWorks();

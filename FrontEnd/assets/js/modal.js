@@ -44,22 +44,25 @@ function handleModal() {
   const modalAdd = document.querySelector(".modal-container.modal-add");
   const backModalButton = document.querySelector(".back-modal");
   const galleryModal = document.querySelector(".modal-main");
+  const addProjectForm = document.getElementById("add-project-form");
 
-  // even me renvoie a l'autre modal 
+  // even me renvoie a l'autre modal
   addPictureButton.addEventListener("click", () => {
     modalAdd.classList.remove("hidden");
+    galleryModal.classList.add("hidden");
   });
+
   backModalButton.addEventListener("click", () => {
     modalAdd.classList.add("hidden");
     galleryModal.classList.remove("hidden");
   });
-
 
   // Event pour supprimer les images
   addImg.addEventListener("click", () => {
     const inputFile = document.querySelector(".img-selected");
     inputFile.click();
   });
+
   inputFile.addEventListener("change", function (event) {
     const files = event.target.files;
     if (files.length > 0) {
@@ -67,10 +70,12 @@ function handleModal() {
       const placeholder = document.querySelector(".placeholder");
       const url = URL.createObjectURL(file);
       placeholder.setAttribute("src", url);
+      const disappearsBalise = document.getElementById("disappears-balise");
+      disappearsBalise.style.display = "none";
     }
   });
 
-  // Even pour Ouvrir le modal 
+  // Even pour Ouvrir le modal
   openMainModal.addEventListener("click", () => {
     document.querySelector(".modal-main").classList.remove("hidden");
   });
@@ -82,38 +87,49 @@ function handleModal() {
       event.target.closest(".modal-container").classList.add("hidden");
     });
   });
-}
 
-// Event pour ajouter des images
-const addProjectForm = document.getElementById("add-project-form");
-addProjectForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const title = document.getElementById("title").value;
-  const categorie = document.getElementById("categorie").value;
-  const imageFile = document.querySelector(".img-selected").files[0];
-  const formData = new FormData();
-  formData.append("title", title);
-  formData.append("category", categorie);
-  formData.append("image", imageFile);
-  try {
-    const response = await fetch("http://localhost:5678/api/works", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + sessionStorage.getItem("token"),
-      },
-      body: formData,
-    });
+  addProjectForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const title = document.getElementById("title").value;
+    const categorie = document.getElementById("categorie").value;
+    const imageFile = document.querySelector(".img-selected").files[0];
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("category", categorie);
+    formData.append("image", imageFile);
 
-    if (response.status === 201) {
-      displayModalWorks();
-    } else {
-      // Gérez les erreurs
-      console.error("Erreur lors de l'ajout du projet");
+    try {
+      const response = await fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
+        },
+        body: formData,
+      });
+
+      if (response.status === 201) {
+        // display et appelée apres verification de ma réponse
+        displayModalWorks();
+        displayWorks();
+
+        // Réinitialise le champ titre
+        document.getElementById("title").value = ""; 
+        // Réinitialise le champ catégorie
+        document.getElementById("categorie").value = ""; 
+        // Réinitialise l'image
+        document.querySelector(".placeholder").setAttribute("src", "");
+
+        const modalAdd = document.querySelector(".modal-container.modal-add");
+        modalAdd.classList.add("hidden");
+      } else {
+        // Gérez les erreurs
+        console.error("Erreur lors de l'ajout du projet");
+      }
+    } catch (error) {
+      console.error("Erreur lors de la requête : ", error);
     }
-  } catch (error) {
-    console.error("Erreur lors de la requête : ", error);
-  }
-});
+  });
+}
 
 // supprimer les images
 async function removeProject(event) {
@@ -129,7 +145,6 @@ async function removeProject(event) {
   if (response.status == 204) {
     displayModalWorks();
   }
-
 }
 
 function main() {
