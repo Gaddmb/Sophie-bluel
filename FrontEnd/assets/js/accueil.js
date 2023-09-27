@@ -1,4 +1,5 @@
 /* async signifie que la function envoyé et une promesse ce qui veut dire qu'elle va transfomer notre renvoie en promesse*/
+// Appels
 async function getWorks() {
   // je recupere les données pour les importer dans mon code
   const res = await fetch("http://localhost:5678/api/works");
@@ -71,10 +72,11 @@ function displayOnglets() {
 }
 async function filtersWorks(id) {
   const works = await getWorks();
-// filtre les objet en fonction de l'id si l'id = -1 tous les  projet sont conservés 
-  const worksFiltered = id == -1 ? works : works.filter((work) => work.categoryId == id);
+  // filtre les objet en fonction de l'id si l'id = -1 tous les  projet sont conservés
+  const worksFiltered =
+    id == -1 ? works : works.filter((work) => work.categoryId == id);
   const gallery = document.querySelector(".gallery");
-// j'oublie souvent mais la propriete innerhtml réinitialise ou suppirme 
+  // j'oublie souvent mais la propriete innerhtml réinitialise ou suppirme
   gallery.innerHTML = "";
   for (let work of worksFiltered) {
     const figureElement = createWorkElement(work);
@@ -90,12 +92,22 @@ function isConnected() {
   /**  le !! transforme en vrai ou faux */
   return !!token;
 }
+
+// gere l'affichage si la personne est connecté ou pas
 function handleAdmin() {
+  const loginLink = document.querySelector("#login-link");
   if (isConnected()) {
+    loginLink.textContent = "Logout";
+    loginLink.addEventListener("click", () => {
+      sessionStorage.removeItem("token");
+      window.location.href = "login.html";
+    });
     const adminElements = document.querySelectorAll(".admin-element");
     adminElements.forEach(function (element) {
       element.classList.remove("hidden");
     });
+  } else {
+    loginLink.textContent = "Login";
   }
 }
 

@@ -1,15 +1,15 @@
 function displayModalWorks() {
   getWorks().then((works) => {
-      /* methode querySelector me permet le renvoie d'un element qui correspond a un selecteur CSS  */
-      const galleryModal = document.querySelector(".modal-img-container");
+    /* methode querySelector me permet le renvoie d'un element qui correspond a un selecteur CSS  */
+    const galleryModal = document.querySelector(".modal-img-container");
 
-      galleryModal.innerHTML = "";
-      for (let work of works) {
-          const figureElement = createWorkModalElement(work);
+    galleryModal.innerHTML = "";
+    for (let work of works) {
+      const figureElement = createWorkModalElement(work);
 
-          /* methode appendChild ajout un noeud a la fin de la liste des enfants d'un noeuf parent spécifié */
-          galleryModal.appendChild(figureElement);
-      }
+      /* methode appendChild ajout un noeud a la fin de la liste des enfants d'un noeuf parent spécifié */
+      galleryModal.appendChild(figureElement);
+    }
   });
 }
 
@@ -45,118 +45,130 @@ async function handleModal() {
   const backModalButton = document.querySelector(".back-modal");
   const galleryModal = document.querySelector(".modal-main");
   const addProjectForm = document.getElementById("add-project-form");
-  const selectElement = document.getElementById('categorie')
+  const selectElement = document.getElementById("categorie");
   const categories = await getCategories();
 
+  // permet aux utilisateurs de sélectionner une catégorie parmi ceux contenus dans le tableau
   for (let categorie of categories) {
-      const option = new Option(categorie.name, categorie.id)
-      selectElement.add(option)
+    const option = new Option(categorie.name, categorie.id);
+    selectElement.add(option);
   }
 
   // Event pour ajouter des images à la modal
   addPictureButton.addEventListener("click", () => {
-      modalAdd.classList.remove("hidden");
-      galleryModal.classList.add("hidden");
+    modalAdd.classList.remove("hidden");
+    galleryModal.classList.add("hidden");
   });
 
   // event pour revenir en arrière dans la modal
   backModalButton.addEventListener("click", () => {
-      modalAdd.classList.add("hidden");
-      galleryModal.classList.remove("hidden");
+    modalAdd.classList.add("hidden");
+    galleryModal.classList.remove("hidden");
   });
 
   // Event pour Ajouter des images qui va déclanché le champ input
   addImg.addEventListener("click", () => {
-      const inputFile = document.querySelector(".img-selected");
-      inputFile.click();
+    const inputFile = document.querySelector(".img-selected");
+    inputFile.click();
   });
 
   inputFile.addEventListener("change", function (event) {
-      const files = event.target.files;
-      if (files.length > 0) {
-          const file = files[0];
-          const placeholder = document.querySelector(".placeholder");
-          const url = URL.createObjectURL(file);
-          placeholder.setAttribute("src", url);
-          const disappearsBalise = document.getElementById("disappears-balise");
-          disappearsBalise.style.display = "none";
-      }
+    const files = event.target.files;
+    if (files.length > 0) {
+      const file = files[0];
+      const placeholder = document.querySelector(".placeholder");
+      const url = URL.createObjectURL(file);
+      placeholder.setAttribute("src", url);
+      const disappearsBalise = document.getElementById("disappears-balise");
+      disappearsBalise.style.display = "none";
+    }
   });
 
   // Even pour Ouvrir le modal principal
   openMainModal.addEventListener("click", () => {
-      document.querySelector(".modal-main").classList.remove("hidden");
+    document.querySelector(".modal-main").classList.remove("hidden");
   });
 
   // Even pour fermer les modal
   closeModalElements.forEach((element) => {
-      element.addEventListener("click", (event) => {
-          // correspond a mon bouton close modal
-          event.target.closest(".modal-container").classList.add("hidden");
-      });
+    element.addEventListener("click", (event) => {
+      // correspond a mon bouton close modal
+      event.target.closest(".modal-container").classList.add("hidden");
+    });
   });
 
   // cette parti du code gere l'ajout de nouveau projet
   addProjectForm.addEventListener("submit", async (e) => {
-      // empeche le comportement par defaut
-      e.preventDefault();
-      // recuepere les donnes du formulaire
-      const title = document.getElementById("title").value;
-      const categorie = document.getElementById("categorie").value;
-      const imageFile = document.querySelector(".img-selected").files[0];
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("category", categorie);
-      formData.append("image", imageFile);
-// envoie ces donnés au serveur en faisaint une requete 
-      try {
-          const response = await fetch("http://localhost:5678/api/works", {
-              method: "POST",
-              headers: {
-                  Authorization: "Bearer " + sessionStorage.getItem("token"),
-              },
-              body: formData,
-          });
+    // empeche le comportement par defaut
+    e.preventDefault();
+    // recuepere les donnes du formulaire
+    const title = document.getElementById("title").value;
+    const categorie = document.getElementById("categorie").value;
+    const imageFile = document.querySelector(".img-selected").files[0];
 
-          if (response.status === 201) {
-              // display et appelée apres verification de ma réponse
-              displayModalWorks();
-              displayWorks();
+    const errorMessageElement = document.querySelector(".error-message");
+    errorMessageElement.textContent = "";
+    if (!imageFile || !title || !categorie) {
+      const errorMessageElement = document.querySelector(".error-message");
+      errorMessageElement.textContent = "Veuillez remplir tout les champs.";
+      return;
+    }
 
-              // Réinitialise le champ titre
-              document.getElementById("title").value = "";
-              // Réinitialise le champ catégorie
-              document.getElementById("categorie").value = "";
-              // Réinitialise l'image
-              document.querySelector(".placeholder").setAttribute("src", "./assets/icons/placeholder.svg");
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("category", categorie);
+    formData.append("image", imageFile);
+    // envoie ces donnés au serveur en faisaint une requete
+    try {
+      const response = await fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
+        },
+        body: formData,
+      });
 
-              const modalAdd = document.querySelector(".modal-container.modal-add");
-              modalAdd.classList.add("hidden");
-          } else {
-              // Gérez les erreurs
-              console.error("Erreur lors de l'ajout du projet");
-          }
-      } catch (error) {
-          console.error("Erreur lors de la requête : ", error);
+      if (response.status === 201) {
+        // display et appelée apres verification de ma réponse
+        displayModalWorks();
+        displayWorks();
+
+        // Réinitialise le champ titre
+        document.getElementById("title").value = "";
+        // Réinitialise le champ catégorie
+        document.getElementById("categorie").value = "";
+        // Réinitialise l'image
+        document
+          .querySelector(".placeholder")
+          .setAttribute("src", "./assets/icons/placeholder.svg");
+
+        const modalAdd = document.querySelector(".modal-container.modal-add");
+        modalAdd.classList.add("hidden");
+      } else {
+        // Gérez les erreurs
+        console.error("Erreur lors de l'ajout du projet");
       }
+    } catch (error) {
+      console.error("Erreur lors de la requête : ", error);
+    }
   });
 }
 
 // supprimer les images
 async function removeProject(event) {
-// recuepre l'id de l'element puis renvoie une requete pour suppprimer l'image 
+  // recuepre l'id de l'element puis renvoie une requete pour suppprimer l'image
   const id = event.target.dataset.id;
   const response = await fetch(`http://localhost:5678/api/works/${id}`, {
-      method: "DELETE",
-      headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + sessionStorage.getItem("token"),
-      },
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
+    },
   });
-//  mettre a jour l'affichage
+  //  mettre a jour l'affichage
   if (response.status == 204) {
-      displayModalWorks();
+    displayModalWorks();
   }
 }
 
